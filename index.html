@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Engineers' Day - Idea Pitch Competition</title>
+    <!-- Google Fonts & FontAwesome Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- External CSS Link -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header>
+        <div class="logo"><i class="fa-solid fa-lightbulb"></i> INNOVENTIONS</div>
+    </header>
+
+    <div class="container">
+        
+        <!-- Left Column: Branding and Overview Details -->
+        <div class="hero-section">
+            <h1>Innovative Idea<br>Pitch Competition</h1>
+            <p class="tagline">Engineers solve problems. Bring your groundbreaking concepts, prototypes, or structural solutions to light this Engineers' Day. Pitch to industry veterans and win exciting rewards.</p>
+            
+            <div class="event-meta">
+                <div class="meta-card">
+                    <i class="fa-regular fa-calendar-days"></i>
+                    <div>
+                        <h3>Date</h3>
+                        <p>Bhadra 3</p>
+                    </div>
+                </div>
+                <div class="meta-card">
+                    <i class="fa-solid fa-map-pin"></i>
+                    <div>
+                        <h3>Venue</h3>
+                        <p>Main Auditorium</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mobile-only injected container (Hidden on Desktop via CSS) -->
+            <div class="mobile-form-placeholder"></div>
+
+            <div class="details-block">
+                <h2>Guidelines & Perks</h2>
+                <ul class="perks-list">
+                    <li><i class="fa-solid fa-circle-check"></i> <span><strong>Eligibility:</strong> Open to all engineering students across branches (Solo or Teams up to 4).</span></li>
+                    <li><i class="fa-solid fa-circle-check"></i> <span><strong>Format:</strong> Interactive project idea presentation followed by a dedicated Q&A session with the judges.</span></li>
+                    <li><i class="fa-solid fa-circle-check"></i> <span><strong>Perks:</strong> Mentorship support, participation certificates, and structured networking channels.</span></li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Desktop Right Column / Mobile Inline Container -->
+        <div class="form-card" id="registrationCard">
+            <h2>Secure Your Slot</h2>
+            <p>Fill out the primary details to register your project idea.</p>
+            
+           <form id="registrationForm">
+    <div class="form-group">
+        <label for="teamName">Project / Team Name</label>
+        <input type="text" id="teamName" name="teamName" class="form-control" placeholder="e.g., EcoCrete Builders" required>
+    </div>
+
+    <div class="form-group">
+        <label for="leaderName">Team Leader / Presenter</label>
+        <input type="text" id="leaderName" name="leaderName" class="form-control" placeholder="Full Name" required>
+    </div>
+
+    <div class="form-group">
+        <label for="email">Email Address</label>
+        <input type="email" id="email" name="email" class="form-control" placeholder="name@example.com" required>
+    </div>
+
+    <!-- Dropdown to select team size -->
+    <div class="form-group">
+        <label for="teamSize">Total Number of People in Group</label>
+        <select id="teamSize" name="teamSize" class="form-control" required>
+            <option value="1">1 (Solo)</option>
+            <option value="2">2 People</option>
+            <option value="3">3 People</option>
+            <option value="4">4 People</option>
+        </select>
+    </div>
+
+    <!-- Dynamic Container where extra member fields appear -->
+    <div id="dynamicMembersContainer"></div>
+
+    <div class="form-group">
+        <label for="ideaAbstract">Brief Pitch Abstract (1-2 sentences)</label>
+        <textarea id="ideaAbstract" name="ideaAbstract" class="form-control" placeholder="Describe the core problem your design or concept solves..." required></textarea>
+    </div>
+
+    <button type="submit" class="btn-submit">Submit Registration</button>
+</form>
+        </div>
+
+    </div>
+
+    <div class="toast" id="successToast">
+        <i class="fa-solid fa-circle-check"></i> Registration submitted successfully!
+    </div>
+
+    <!-- External JavaScript Link -->
+    <script src="script.js"></script>
+</body>
+</html>

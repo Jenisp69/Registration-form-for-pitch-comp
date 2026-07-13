@@ -395,3 +395,71 @@ textarea.form-control {
         display: none;
     }
 }
+
+
+/* Dual-Club Social Footer Design */
+.social-branding-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 2.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border-color);
+}
+
+.club-social-block {
+    flex: 1;
+    text-align: center;
+}
+
+.club-social-block h4 {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.75rem;
+}
+
+.social-icons {
+    display: flex;
+    justify-content: center;
+    gap: 1.2rem;
+}
+
+.social-icons a {
+    color: var(--text-muted);
+    font-size: 1.2rem;
+    transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.social-icons a:hover {
+    transform: translateY(-2px);
+}
+
+/* Hover Accent Profiles */
+.club-social-block:first-of-type .social-icons a:hover {
+    color: var(--primary); /* Neon color choice 1 */
+}
+
+.club-social-block:last-of-type .social-icons a:hover {
+    color: var(--secondary); /* Neon color choice 2 */
+}
+
+.social-vertical-divider {
+    width: 1px;
+    height: 40px;
+    background: var(--border-color);
+    margin: 0 1rem;
+}
+
+/* Responsive collapse for small screens */
+@media (max-width: 480px) {
+    .social-branding-footer {
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+    .social-vertical-divider {
+        display: none;
+    }
+}

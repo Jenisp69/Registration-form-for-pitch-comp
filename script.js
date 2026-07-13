@@ -1,4 +1,4 @@
-const webAppUrl = 'https://script.google.com/macros/s/AKfycbw5ZgNGMM7chjchLi2N2kFELruFOR7z6xyAIcfnJqDVnU5h5EfYvwZsGnhQtJpMX0fBmA/exec';
+const webAppUrl = 'https://script.google.com/macros/s/AKfycbxs1duosqmAq2ADculz1O4EbNVQgwFOa4gsPmQ4SvHI9DyyyV2ZwMNvTckNCe8zqpx2Jw/exec';
 
 const teamSizeSelect = document.getElementById('teamSize');
 const dynamicContainer = document.getElementById('dynamicMembersContainer');
@@ -81,6 +81,9 @@ document.getElementById('registrationForm').addEventListener('submit', function(
     .then(data => {
         if(data.result === 'success') {
             const toast = document.getElementById('successToast');
+            
+            // CHANGES ARE HERE: Reads data.uniqueId from the new Google script
+            toast.innerHTML = `<i class="fa-solid fa-circle-check"></i> Registered successfully! ID: <strong>#${data.uniqueId}</strong>. Check your email.`;
             toast.style.display = 'block';
             
             this.reset();
@@ -88,7 +91,9 @@ document.getElementById('registrationForm').addEventListener('submit', function(
 
             setTimeout(() => {
                 toast.style.display = 'none';
-            }, 4000);
+                // Resets the toast text back to default for the next submission
+                toast.innerHTML = `<i class="fa-solid fa-circle-check"></i> Registration submitted successfully!`;
+            }, 6500); // Kept on screen slightly longer so they can read their ID
         } else {
             alert('Error saving data: ' + data.error);
         }

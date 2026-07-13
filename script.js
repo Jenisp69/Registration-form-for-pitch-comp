@@ -45,6 +45,12 @@ window.addEventListener('resize', setupResponsiveLayout);
 document.getElementById('registrationForm').addEventListener('submit', function(e) {
     e.preventDefault();
     
+    // Disable submit button during active loading execution
+    const submitButton = this.querySelector('.btn-submit');
+    submitButton.disabled = true;
+    const originalButtonText = submitButton.innerText;
+    submitButton.innerText = "Submitting...";
+    
     // Gather dynamic member input values into an array, then join with commas
     const memberInputs = document.querySelectorAll('.member-name-input');
     const memberNamesArray = [];
@@ -58,6 +64,7 @@ document.getElementById('registrationForm').addEventListener('submit', function(
     formData.append('teamName', document.getElementById('teamName').value);
     formData.append('leaderName', document.getElementById('leaderName').value);
     formData.append('email', document.getElementById('email').value);
+    formData.append('contactnum', document.getElementById('contactnum').value); // Matches column J
     formData.append('teamSize', teamSizeSelect.value);
     formData.append('teamMembers', teamMembersString); // Sends as "Name 2, Name 3"
     formData.append('ideaAbstract', document.getElementById('ideaAbstract').value);
@@ -89,5 +96,9 @@ document.getElementById('registrationForm').addEventListener('submit', function(
     .catch(error => {
         console.error('Error:', error);
         alert('Failed to connect to registration server.');
+    })
+    .finally(() => {
+        submitButton.disabled = false;
+        submitButton.innerText = originalButtonText;
     });
 });

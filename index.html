@@ -12,18 +12,27 @@
 </head>
 <body>
 
-    <header>
+    <header class="animate-fade-in">
         <div class="logo"><i class="fa-solid fa-lightbulb"></i> INNOVENTIONS</div>
+        
+        <!-- Symmetrical Host Branding Block -->
+        <div class="host-branding">
+            <img src="images/buildsLogo.png" alt="Builds Club" class="brand-logo club-digital">
+            <span class="brand-divider"></span>
+            <img src="images/NPILogo.png" alt="College Logo" class="brand-logo college-center">
+            <span class="brand-divider"></span>
+            <img src="images/digitalLogo.png" alt="Digital Club" class="brand-logo club-builds">
+        </div>
     </header>
 
     <div class="container">
         
         <!-- Left Column: Branding and Overview Details -->
         <div class="hero-section">
-            <h1>Innovative Idea<br>Pitch Competition</h1>
-            <p class="tagline">Engineers solve problems. Bring your groundbreaking concepts, prototypes, or structural solutions to light this Engineers' Day. Pitch to industry veterans and win exciting rewards.</p>
+            <h1 class="animate-slide-up" style="--delay: 1;">Innovative Idea<br>Pitch Competition</h1>
+            <p class="tagline animate-slide-up" style="--delay: 2;">Engineers solve problems. Bring your groundbreaking concepts, prototypes, or structural solutions to light this Engineers' Day. Pitch to industry veterans and win exciting rewards.</p>
             
-            <div class="event-meta">
+            <div class="event-meta animate-slide-up" style="--delay: 3;">
                 <div class="meta-card">
                     <i class="fa-regular fa-calendar-days"></i>
                     <div>
@@ -43,58 +52,101 @@
             <!-- Mobile-only injected container (Hidden on Desktop via CSS) -->
             <div class="mobile-form-placeholder"></div>
 
-            <div class="details-block">
-                <h2>Guidelines & Perks</h2>
+            <!-- Guidelines & Details Section -->
+            <div class="details-block animate-slide-up" style="--delay: 4;">
+                <h2>Guidelines & Rewards</h2>
                 <ul class="perks-list">
-                    <li><i class="fa-solid fa-circle-check"></i> <span><strong>Eligibility:</strong> Open to all engineering students across branches (Solo or Teams up to 4).</span></li>
-                    <li><i class="fa-solid fa-circle-check"></i> <span><strong>Format:</strong> Interactive project idea presentation followed by a dedicated Q&A session with the judges.</span></li>
-                    <li><i class="fa-solid fa-circle-check"></i> <span><strong>Perks:</strong> Mentorship support, participation certificates, and structured networking channels.</span></li>
+                    <li>
+                        <i class="fa-solid fa-graduation-cap"></i> 
+                        <span><strong>Eligibility:</strong> Exclusively open to <strong>+2 students</strong> who have recently passed or are currently studying.</span>
+                    </li>
+                    <li>
+                        <i class="fa-solid fa-trophy"></i> 
+                        <span class="prize-toggle-container">
+                            <details>
+                                <summary><strong>Grand Prizes</strong> <span class="toggle-hint">(Click to reveal rewards)</span></summary>
+                                <div class="prize-dropdown-content">
+                                    • <strong>1st Place:</strong> <span class="neongreen-text">NPR 10,000</span> + <strong>50% Scholarship</strong> for 1st Year at NPI.<br>
+                                    • <strong>2nd Place:</strong> <span class="neongreen-text">NPR 7,000</span> + <strong>30% Scholarship</strong> for 1st Year at NPI.<br>
+                                    • <strong>3rd Place:</strong> <span class="neongreen-text">NPR 4,000</span> + <strong>10% Scholarship</strong> for 1st Year at NPI.
+                                </div>
+                            </details>
+                        </span>
+                    </li>
+                    <li>
+                        <i class="fa-solid fa-gift"></i> 
+                        <span><strong>Assured Perk:</strong> <strong>Every single participant</strong> receives a guaranteed <strong>10% discount</strong> if they choose to study at NPI!</span>
+                    </li>
+                    <li>
+                        <i class="fa-solid fa-stopwatch"></i> 
+                        <span><strong>Presentation Format:</strong> Max <strong>10 minutes</strong> to showcase your project idea, followed by an interactive <strong>5-minute Q&A</strong> session with the judges.</span>
+                    </li>
+                    <li>
+                        <i class="fa-solid fa-users"></i> 
+                        <span><strong>Team Size:</strong> Form a group of up to <strong>4 members</strong> (Solo entries are also welcome).</span>
+                    </li>
                 </ul>
+
+                <!-- Elegant Terms & Conditions Accordion / Detail Block -->
+                <div style="margin-top: 2rem; padding: 1rem; background: rgba(255, 255, 255, 0.02); border: 1px solid var(--border-color); border-radius: 8px;">
+                    <p style="font-size: 0.85rem; color: var(--text-muted); font-weight: 600; margin-bottom: 0.5rem;">
+                        <i class="fa-solid fa-circle-info" style="color: var(--secondary);"></i> Prize Pool Distribution Details
+                    </p>
+                    <p style="font-size: 0.8rem; color: var(--text-muted); line-height: 1.5;">
+                        Cash awards and scholarships are allocated per winning group, not per individual. Cash amounts can be divided among members freely. Scholarships are granted to the pool; for instance, a single student from a 1st place group utilizing the scholarship receives the full 50% waiver. If two members from that group enroll, the waiver splits into 25% each.
+                    </p>
+                </div>
             </div>
         </div>
 
         <!-- Desktop Right Column / Mobile Inline Container -->
-        <div class="form-card" id="registrationCard">
+        <div class="form-card animate-pop-in" id="registrationCard">
             <h2>Secure Your Slot</h2>
             <p>Fill out the primary details to register your project idea.</p>
             
-           <form id="registrationForm">
-    <div class="form-group">
-        <label for="teamName">Project / Team Name</label>
-        <input type="text" id="teamName" name="teamName" class="form-control" placeholder="e.g., EcoCrete Builders" required>
-    </div>
+            <form id="registrationForm">
+                <div class="form-group">
+                    <label for="teamName">Project / Team Name</label>
+                    <input type="text" id="teamName" name="teamName" class="form-control" placeholder="e.g., Digital Builders" required>
+                </div>
 
-    <div class="form-group">
-        <label for="leaderName">Team Leader / Presenter</label>
-        <input type="text" id="leaderName" name="leaderName" class="form-control" placeholder="Full Name" required>
-    </div>
+                <div class="form-group">
+                    <label for="leaderName">Team Leader / Presenter</label>
+                    <input type="text" id="leaderName" name="leaderName" class="form-control" placeholder="Full Name" required>
+                </div>
 
-    <div class="form-group">
-        <label for="email">Email Address</label>
-        <input type="email" id="email" name="email" class="form-control" placeholder="name@example.com" required>
-    </div>
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" name="email" class="form-control" placeholder="name@example.com" required>
+                </div>
 
-    <!-- Dropdown to select team size -->
-    <div class="form-group">
-        <label for="teamSize">Total Number of People in Group</label>
-        <select id="teamSize" name="teamSize" class="form-control" required>
-            <option value="1">1 (Solo)</option>
-            <option value="2">2 People</option>
-            <option value="3">3 People</option>
-            <option value="4">4 People</option>
-        </select>
-    </div>
+                <!-- Added Contact Number Field Mapping to Sheets -->
+                <div class="form-group">
+                    <label for="contactnum">Contact Number</label>
+                    <input type="tel" id="contactnum" name="contactnum" class="form-control" placeholder="e.g., 98XXXXXXXX" pattern="[0-9]{10}" title="Please enter a valid 10-digit mobile number" required>
+                </div>
 
-    <!-- Dynamic Container where extra member fields appear -->
-    <div id="dynamicMembersContainer"></div>
+                <!-- Dropdown to select team size -->
+                <div class="form-group">
+                    <label for="teamSize">Total Number of People in Group</label>
+                    <select id="teamSize" name="teamSize" class="form-control" required>
+                        <option value="1">1 (Solo)</option>
+                        <option value="2">2 People</option>
+                        <option value="3">3 People</option>
+                        <option value="4">4 People</option>
+                    </select>
+                </div>
 
-    <div class="form-group">
-        <label for="ideaAbstract">Brief Pitch Abstract (1-2 sentences)</label>
-        <textarea id="ideaAbstract" name="ideaAbstract" class="form-control" placeholder="Describe the core problem your design or concept solves..." required></textarea>
-    </div>
+                <!-- Dynamic Container where extra member fields appear -->
+                <div id="dynamicMembersContainer"></div>
 
-    <button type="submit" class="btn-submit">Submit Registration</button>
-</form>
+                <div class="form-group">
+                    <label for="ideaAbstract">Brief Pitch Abstract (1-2 sentences)</label>
+                    <textarea id="ideaAbstract" name="ideaAbstract" class="form-control" placeholder="Describe the core problem your design or concept solves..." required></textarea>
+                </div>
+
+                <button type="submit" class="btn-submit">Submit Registration</button>
+            </form>
         </div>
 
     </div>

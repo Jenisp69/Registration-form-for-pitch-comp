@@ -9,45 +9,34 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- External CSS Link -->
     <link rel="stylesheet" href="style.css">
-    <!-- External CSS Link with Version Control -->
 </head>
 <body>
 
-
     <header class="animate-fade-in">
-    <div class="logo"><i class="fa-solid fa-lightbulb"></i> INNOVENTIONS</div>
-    
-    <!-- Symmetrical Host Branding Block with Clickable Links -->
-    <div class="host-branding">
-        <!-- Builds Club Link -->
-        <a href="https://npi-builds.vercel.app/" target="_blank" rel="noopener noreferrer" class="brand-link">
-            <img src="images/buildsLogo.png" alt="Builds Club" class="brand-logo club-digital">
-        </a>
+        <div class="logo"><i class="fa-solid fa-lightbulb"></i> INNOVENTIONS</div>
         
-        <span class="brand-divider"></span>
-        
-        <!-- NPI College Link -->
-        <a href="https://www.npi.edu.np" target="_blank" rel="noopener noreferrer" class="brand-link">
-            <img src="images/NPILogo.png" alt="College Logo" class="brand-logo college-center">
-        </a>
-        
-        <span class="brand-divider"></span>
-        
-        <!-- Digital Club Link -->
-        <a href="https://npi-digital.vercel.app/" target="_blank" rel="noopener noreferrer" class="brand-link">
-            <img src="images/digitalLogo.png" alt="Digital Club" class="brand-logo club-builds">
-        </a>
-    </div>
-</header>
-
-
-
-
-
-
-
-
-
+        <!-- Symmetrical Host Branding Block with Clickable Links -->
+        <div class="host-branding">
+            <!-- Builds Club Link -->
+            <a href="https://npi-builds.vercel.app/" target="_blank" rel="noopener noreferrer" class="brand-link">
+                <img src="images/buildsLogo.png" alt="Builds Club" class="brand-logo club-digital">
+            </a>
+            
+            <span class="brand-divider"></span>
+            
+            <!-- NPI College Link -->
+            <a href="https://www.npi.edu.np" target="_blank" rel="noopener noreferrer" class="brand-link">
+                <img src="images/NPILogo.png" alt="College Logo" class="brand-logo college-center">
+            </a>
+            
+            <span class="brand-divider"></span>
+            
+            <!-- Digital Club Link -->
+            <a href="https://npi-digital.vercel.app/" target="_blank" rel="noopener noreferrer" class="brand-link">
+                <img src="images/digitalLogo.png" alt="Digital Club" class="brand-logo club-builds">
+            </a>
+        </div>
+    </header>
 
     <div class="container">
         
@@ -90,9 +79,9 @@
                             <details>
                                 <summary><strong>Grand Prizes</strong> <span class="toggle-hint">(Click to reveal rewards)</span></summary>
                                 <div class="prize-dropdown-content">
-                                    • <strong>1st Place:</strong> <span class="neongreen-text">NPR 10,000</span> + <strong>50% Scholarship</strong> for 1st Year at NPI.<br>
-                                    • <strong>2nd Place:</strong> <span class="neongreen-text">NPR 7,000</span> + <strong>30% Scholarship</strong> for 1st Year at NPI.<br>
-                                    • <strong>3rd Place:</strong> <span class="neongreen-text">NPR 4,000</span> + <strong>15% Scholarship</strong> for 1st Year at NPI.
+                                    • <strong>1st Place:</strong> <span class="neongreen-text">NPR 10,000 (NPR 10,000)</span> + <strong>50% Scholarship</strong> for 1st Year at NPI.<br>
+                                    • <strong>2nd Place:</strong> <span class="neongreen-text">NPR 7,000 (NPR 7,000)</span> + <strong>30% Scholarship</strong> for 1st Year at NPI.<br>
+                                    • <strong>3rd Place:</strong> <span class="neongreen-text">NPR 4,000 (NPR 4,000)</span> + <strong>15% Scholarship</strong> for 1st Year at NPI.
                                 </div>
                             </details>
                         </span>
@@ -123,7 +112,7 @@
             </div>
         </div>
 
-       <!-- Desktop Right Column / Mobile Inline Container -->
+        <!-- Desktop Right Column / Mobile Inline Container -->
         <div class="form-card animate-pop-in" id="registrationCard">
             <h2>Secure Your Slot</h2>
             <p>Fill out the primary details to register your project idea.</p>
@@ -144,27 +133,45 @@
                     <input type="email" id="email" name="email" class="form-control" placeholder="name@example.com" required>
                 </div>
 
+                <div class="form-group">
+                    <label for="collegeName">College Name</label>
+                    <input type="text" id="collegeName" name="collegeName" class="form-control" placeholder="e.g., Nepal Polytechnic Institute" required>
+                </div>
 
-<div class="form-group">
-    <label for="collegeName">College Name</label>
-    <input type="text" id="collegeName" name="collegeName" class="form-control" placeholder="e.g., Nepal Polytechnic Institute" required>
-</div>
+                <!-- NEW: Required Multiple File Upload Component with dynamic "+" integration -->
+                <div class="form-group">
+                    <label style="font-weight: 600; display: block; margin-bottom: 8px;">
+                        College ID Card / Related Document <span style="color: #ef4444;">*</span>
+                    </label>
+                    
+                    <div id="fileUploadContainer">
+                        <div class="file-input-wrapper" style="display: flex; gap: 10px; margin-bottom: 8px;">
+                            <input type="file" name="collegeDoc" class="form-control college-doc-file" accept="image/*,application/pdf" style="flex-grow: 1;" required>
+                            <button type="button" id="addFileBtn" style="background-color: #0d9488; color: white; border: none; padding: 0 15px; border-radius: 6px; cursor: pointer; font-size: 1.2rem; font-weight: bold; transition: background 0.2s;">+</button>
+                        </div>
+                    </div>
+                    
+                    <div style="display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-top: 6px;">
+                        <span style="background-color: rgba(239, 68, 68, 0.1); color: #f87171; font-size: 0.75rem; padding: 3px 8px; border-radius: 4px; font-weight: 500; display: inline-flex; align-items: center; gap: 4px;">
+                            <i class="fa-solid fa-triangle-exclamation" style="font-size: 0.7rem;"></i> Max 10 MB Total
+                        </span>
+                        <span style="background-color: rgba(13, 148, 136, 0.1); color: #2dd4bf; font-size: 0.75rem; padding: 3px 8px; border-radius: 4px; font-weight: 500;">
+                            PNG, JPG, JPEG
+                        </span>
+                        <span style="background-color: rgba(13, 148, 136, 0.1); color: #2dd4bf; font-size: 0.75rem; padding: 3px 8px; border-radius: 4px; font-weight: 500;">
+                            PDF
+                        </span>
+                        <span style="color: #a0aec0; font-size: 0.75rem; margin-left: auto;">
+                            Please compress files if they are too large.
+                        </span>
+                    </div>
+                </div>
 
-
-<div class="form-group">
-    <label for="collegeDoc">College ID Card / Document (Optional)</label>
-    <input type="file" id="collegeDoc" name="collegeDoc" class="form-control" accept="image/*,application/pdf">
-    <small style="color: #a0aec0; font-size: 0.8rem; display: block; margin-top: 4px;">Upload your ID card, registration slip, or related student document (Image or PDF).</small>
-</div>
-
-
-                <!-- Added Contact Number Field Mapping to Sheets -->
                 <div class="form-group">
                     <label for="contactnum">Contact Number</label>
                     <input type="tel" id="contactnum" name="contactnum" class="form-control" placeholder="e.g., 98XXXXXXXX" pattern="[0-9]{10}" title="Please enter a valid 10-digit mobile number" required>
                 </div>
 
-                <!-- Dropdown to select team size -->
                 <div class="form-group">
                     <label for="teamSize">Total Number of People in Group</label>
                     <select id="teamSize" name="teamSize" class="form-control" required>
@@ -210,11 +217,6 @@
             </div>
         </div> <!-- End of registrationCard -->
 
-
-
-            </form>
-        </div>
-
     </div>
 
     <div class="toast" id="successToast">
@@ -224,3 +226,4 @@
     <!-- External JavaScript Link -->
     <script src="script.js"></script>
 </body>
+</html>

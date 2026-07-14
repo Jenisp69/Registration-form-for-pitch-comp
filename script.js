@@ -1,7 +1,9 @@
-const webAppUrl = 'https://script.google.com/macros/s/AKfycbxs1duosqmAq2ADculz1O4EbNVQgwFOa4gsPmQ4SvHI9DyyyV2ZwMNvTckNCe8zqpx2Jw/exec ';
+const webAppUrl = 'https://script.google.com/macros/s/AKfycbxs1duosqmAq2ADculz1O4EbNVQgwFOa4gsPmQ4SvHI9DyyyV2ZwMNvTckNCe8zqpx2Jw/exec';
 
 const teamSizeSelect = document.getElementById('teamSize');
 const dynamicContainer = document.getElementById('dynamicMembersContainer');
+const fileUploadContainer = document.getElementById('fileUploadContainer');
+const addFileBtn = document.getElementById('addFileBtn');
 
 // Listen for selection changes to generate dynamic text boxes
 teamSizeSelect.addEventListener('change', function() {
@@ -20,6 +22,27 @@ teamSizeSelect.addEventListener('change', function() {
         `;
         dynamicContainer.appendChild(div);
     }
+});
+
+// Dynamic File Upload Fields ("+" Button logic)
+addFileBtn.addEventListener('click', function() {
+    const div = document.createElement('div');
+    div.className = 'file-input-wrapper';
+    div.style.display = 'flex';
+    div.style.gap = '10px';
+    div.style.marginBottom = '8px';
+    div.style.animation = 'slideIn 0.2s ease forwards';
+
+    div.innerHTML = `
+        <input type="file" name="collegeDoc" class="form-control college-doc-file" accept="image/*,application/pdf" style="flex-grow: 1;" required>
+        <button type="button" class="remove-file-btn" style="background-color: #ef4444; color: white; border: none; padding: 0 15px; border-radius: 6px; cursor: pointer; font-size: 1.2rem; font-weight: bold;">-</button>
+    `;
+    fileUploadContainer.appendChild(div);
+
+    // Event listener to remove this specific file input row
+    div.querySelector('.remove-file-btn').addEventListener('click', function() {
+        div.remove();
+    });
 });
 
 // Structural layout repositioning loop for mobile layout viewports
@@ -45,10 +68,37 @@ window.addEventListener('resize', setupResponsiveLayout);
 document.getElementById('registrationForm').addEventListener('submit', async function(e) {
     e.preventDefault();
     
-    // Disable submit button during active loading execution
     const submitButton = this.querySelector('.btn-submit');
-    submitButton.disabled = true;
     const originalButtonText = submitButton.innerText;
+
+    // 1. STRICT FILE REQUIREMENT VALIDATION
+    const fileInputs = document.querySelectorAll('.college-doc-file');
+    let hasAtLeastOneFile = false;
+    let totalBytes = 0;
+    const filesToUpload = [];
+
+    fileInputs.forEach(input => {
+        if (input.files.length > 0) {
+            hasAtLeastOneFile = true;
+            totalBytes += input.files[0].size;
+            filesToUpload.push(input.files[0]);
+        }
+    });
+
+    if (!hasAtLeastOneFile) {
+        alert("Please upload at least one College ID Card or related document before submitting.");
+        return; // HALT SUBMISSION
+    }
+
+    // 2. STRICT TOTAL SIZE LIMIT VALIDATION (10MB limit)
+    const maxBytes = 10 * 1024 * 1024; // 10 Megabytes in Bytes
+    if (totalBytes > maxBytes) {
+        alert("The total size of your uploaded files exceeds the 10 MB limit. Please compress your files and try again.");
+        return; // HALT SUBMISSION
+    }
+
+    // If validations pass, disable submit button during active execution
+    submitButton.disabled = true;
     submitButton.innerText = "Submitting...";
     
     // Gather dynamic member input values into an array, then join with commas
@@ -70,23 +120,31 @@ document.getElementById('registrationForm').addEventListener('submit', async fun
     formData.append('ideaAbstract', document.getElementById('ideaAbstract').value);
     formData.append('collegeName', document.getElementById('collegeName').value);
 
-    // Convert file to Base64 string safely if selected
-    const fileInput = document.getElementById('collegeDoc');
-    if (fileInput.files.length > 0) {
-        const file = fileInput.files[0];
-        try {
-            const base64Data = await new Promise((resolve, reject) => {
-                const reader = new FileReader();
-                reader.onload = () => resolve(reader.result.split(',')[1]); 
-                reader.onerror = error => reject(error);
-                reader.readAsDataURL(file);
-            });
-            formData.append('fileData', base64Data);
-            formData.append('fileName', file.name);
-            formData.append('fileType', file.type);
-        } catch (err) {
-            console.error("File processing error: ", err);
-        }
+    // Convert all collected files to Base64 strings safely
+    const filePromises = filesToUpload.map(file => {
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onload = () => {
+                resolve({
+                    data: reader.result.split(',')[1],
+                    name: file.name,
+                    type: file.type
+                });
+            };
+            reader.onerror = error => reject(error);
+            reader.readAsDataURL(file);
+        });
+    });
+
+    try {
+        const processedFiles = await Promise.all(filePromises);
+        formData.append('filesJson', JSON.stringify(processedFiles));
+    } catch (err) {
+        console.error("File processing error: ", err);
+        alert("Failed to process the uploaded files. Please try again.");
+        submitButton.disabled = false;
+        submitButton.innerText = originalButtonText;
+        return;
     }
 
     // POST request to Google Apps Script Endpoint
@@ -106,6 +164,12 @@ document.getElementById('registrationForm').addEventListener('submit', async fun
             
             this.reset();
             dynamicContainer.innerHTML = ''; // Wipe dynamic fields
+
+            // Reset file upload slots back to a single input row
+            const extraInputs = fileUploadContainer.querySelectorAll('.file-input-wrapper');
+            extraInputs.forEach((el, index) => {
+                if (index > 0) el.remove();
+            });
 
             setTimeout(() => {
                 toast.style.display = 'none';

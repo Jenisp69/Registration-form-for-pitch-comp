@@ -1,4 +1,4 @@
-const webAppUrl = 'https://script.google.com/macros/s/AKfycbxs1duosqmAq2ADculz1O4EbNVQgwFOa4gsPmQ4SvHI9DyyyV2ZwMNvTckNCe8zqpx2Jw/exec';
+const webAppUrl = 'https://script.google.com/macros/s/AKfycbxs1duosqmAq2ADculz1O4EbNVQgwFOa4gsPmQ4SvHI9DyyyV2ZwMNvTckNCe8zqpx2Jw/exec ';
 
 const teamSizeSelect = document.getElementById('teamSize');
 const dynamicContainer = document.getElementById('dynamicMembersContainer');
@@ -42,7 +42,7 @@ window.addEventListener('DOMContentLoaded', setupResponsiveLayout);
 window.addEventListener('resize', setupResponsiveLayout);
 
 // Submission Logic Operations
-document.getElementById('registrationForm').addEventListener('submit', function(e) {
+document.getElementById('registrationForm').addEventListener('submit', async function(e) {
     e.preventDefault();
     
     // Disable submit button during active loading execution
@@ -59,17 +59,37 @@ document.getElementById('registrationForm').addEventListener('submit', function(
     });
     const teamMembersString = memberNamesArray.join(', ');
 
-    // Match exact column names set up inside Google Sheet headers
+    // Pack text fields into URL encoding
     const formData = new URLSearchParams();
     formData.append('teamName', document.getElementById('teamName').value);
     formData.append('leaderName', document.getElementById('leaderName').value);
     formData.append('email', document.getElementById('email').value);
-    formData.append('contactnum', document.getElementById('contactnum').value); // Matches column J
+    formData.append('contactnum', document.getElementById('contactnum').value);
     formData.append('teamSize', teamSizeSelect.value);
-    formData.append('teamMembers', teamMembersString); // Sends as "Name 2, Name 3"
+    formData.append('teamMembers', teamMembersString);
     formData.append('ideaAbstract', document.getElementById('ideaAbstract').value);
+    formData.append('collegeName', document.getElementById('collegeName').value);
 
-    // POST request to your Google Apps Script Endpoint
+    // Convert file to Base64 string safely if selected
+    const fileInput = document.getElementById('collegeDoc');
+    if (fileInput.files.length > 0) {
+        const file = fileInput.files[0];
+        try {
+            const base64Data = await new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = () => resolve(reader.result.split(',')[1]); 
+                reader.onerror = error => reject(error);
+                reader.readAsDataURL(file);
+            });
+            formData.append('fileData', base64Data);
+            formData.append('fileName', file.name);
+            formData.append('fileType', file.type);
+        } catch (err) {
+            console.error("File processing error: ", err);
+        }
+    }
+
+    // POST request to Google Apps Script Endpoint
     fetch(webAppUrl, {
         method: 'POST',
         body: formData,
@@ -81,19 +101,16 @@ document.getElementById('registrationForm').addEventListener('submit', function(
     .then(data => {
         if(data.result === 'success') {
             const toast = document.getElementById('successToast');
-            
-            // CHANGES ARE HERE: Reads data.uniqueId from the new Google script
             toast.innerHTML = `<i class="fa-solid fa-circle-check"></i> Registered successfully! ID: <strong>#${data.uniqueId}</strong>. Check your email.`;
             toast.style.display = 'block';
             
             this.reset();
-            dynamicContainer.innerHTML = ''; // Wipe dynamic fields on success
+            dynamicContainer.innerHTML = ''; // Wipe dynamic fields
 
             setTimeout(() => {
                 toast.style.display = 'none';
-                // Resets the toast text back to default for the next submission
                 toast.innerHTML = `<i class="fa-solid fa-circle-check"></i> Registration submitted successfully!`;
-            }, 6500); // Kept on screen slightly longer so they can read their ID
+            }, 6500); 
         } else {
             alert('Error saving data: ' + data.error);
         }

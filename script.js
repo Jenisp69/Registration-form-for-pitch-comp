@@ -5,6 +5,17 @@ const dynamicContainer = document.getElementById('dynamicMembersContainer');
 const fileUploadContainer = document.getElementById('fileUploadContainer');
 const addFileBtn = document.getElementById('addFileBtn');
 
+// Modal Elements
+const reviewModal = document.getElementById('reviewModal');
+const reviewSummary = document.getElementById('reviewSummary');
+const backEditBtn = document.getElementById('backEditBtn');
+const finalConfirmBtn = document.getElementById('finalConfirmBtn');
+const registrationForm = document.getElementById('registrationForm');
+
+// Global arrays to store data temporarily between modal stages
+let validatedFilesToUpload = [];
+let optimizedTeamMembersString = '';
+
 // Listen for selection changes to generate dynamic text boxes
 teamSizeSelect.addEventListener('change', function() {
     const size = parseInt(this.value);
@@ -64,50 +75,105 @@ function setupResponsiveLayout() {
 window.addEventListener('DOMContentLoaded', setupResponsiveLayout);
 window.addEventListener('resize', setupResponsiveLayout);
 
-// Submission Logic Operations
-document.getElementById('registrationForm').addEventListener('submit', async function(e) {
+// Stage 1: Form Validation & Confirmation Modal Trigger
+registrationForm.addEventListener('submit', function(e) {
     e.preventDefault();
-    
-    const submitButton = this.querySelector('.btn-submit');
-    const originalButtonText = submitButton.innerText;
 
     // 1. STRICT FILE REQUIREMENT VALIDATION
     const fileInputs = document.querySelectorAll('.college-doc-file');
     let hasAtLeastOneFile = false;
     let totalBytes = 0;
-    const filesToUpload = [];
+    validatedFilesToUpload = []; // Clear array
 
     fileInputs.forEach(input => {
         if (input.files.length > 0) {
             hasAtLeastOneFile = true;
             totalBytes += input.files[0].size;
-            filesToUpload.push(input.files[0]);
+            validatedFilesToUpload.push(input.files[0]);
         }
     });
 
     if (!hasAtLeastOneFile) {
         alert("Please upload at least one College ID Card or related document before submitting.");
-        return; // HALT SUBMISSION
+        return;
     }
 
     // 2. STRICT TOTAL SIZE LIMIT VALIDATION (10MB limit)
-    const maxBytes = 10 * 1024 * 1024; // 10 Megabytes in Bytes
+    const maxBytes = 10 * 1024 * 1024; 
     if (totalBytes > maxBytes) {
         alert("The total size of your uploaded files exceeds the 10 MB limit. Please compress your files and try again.");
-        return; // HALT SUBMISSION
+        return;
     }
 
-    // If validations pass, disable submit button during active execution
-    submitButton.disabled = true;
-    submitButton.innerText = "Submitting...";
-    
     // Gather dynamic member input values into an array, then join with commas
     const memberInputs = document.querySelectorAll('.member-name-input');
     const memberNamesArray = [];
     memberInputs.forEach(input => {
-        if(input.value.trim() !== "") memberNamesArray.push(input.value.trim());
+        if (input.value.trim() !== "") memberNamesArray.push(input.value.trim());
     });
-    const teamMembersString = memberNamesArray.join(', ');
+    optimizedTeamMembersString = memberNamesArray.join(', ');
+
+    // Read details out of form fields for presentation text variables
+    const teamName = document.getElementById('teamName').value;
+    const leaderName = document.getElementById('leaderName').value;
+    const email = document.getElementById('email').value;
+    const contactnum = document.getElementById('contactnum').value;
+    const collegeName = document.getElementById('collegeName').value;
+    const teamSize = teamSizeSelect.value;
+    const ideaAbstract = document.getElementById('ideaAbstract').value;
+    const membersDisplay = optimizedTeamMembersString.length > 0 ? optimizedTeamMembersString : 'None (Solo Entry)';
+
+    // Generate readable file items with descriptive icons based on type
+    let filesHtml = '<div style="display: flex; flex-direction: column; gap: 4px; margin-top: 4px;">';
+    validatedFilesToUpload.forEach(file => {
+        const isPdf = file.type === 'application/pdf';
+        const iconClass = isPdf ? 'fa-solid fa-file-pdf' : 'fa-solid fa-file-image';
+        const iconColor = isPdf ? '#ef4444' : '#3b82f6';
+        const sizeInKb = (file.size / 1024).toFixed(1);
+        
+        filesHtml += `
+            <div style="display: flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.04); padding: 6px 10px; border-radius: 4px; border: 1px solid rgba(255,255,255,0.05);">
+                <i class="${iconClass}" style="color: ${iconColor}; font-size: 1rem;"></i>
+                <span style="font-size: 0.85rem; color: #e2e8f0; text-overflow: ellipsis; overflow: hidden; white-space: nowrap; max-width: 350px;">${file.name}</span>
+                <span style="font-size: 0.75rem; color: var(--text-muted); margin-left: auto;">(${sizeInKb} KB)</span>
+            </div>
+        `;
+    });
+    filesHtml += '</div>';
+
+    // Inject current entries into structural modal preview markup
+    reviewSummary.innerHTML = `
+        <div class="review-item"><span class="review-label">Project / Team Name</span><span class="review-value">${teamName}</span></div>
+        <div class="review-item"><span class="review-label">Team Leader</span><span class="review-value">${leaderName}</span></div>
+        <div class="review-item"><span class="review-label">Email Address</span><span class="review-value">${email}</span></div>
+        <div class="review-item"><span class="review-label">Contact Number</span><span class="review-value">${contactnum}</span></div>
+        <div class="review-item"><span class="review-label">College Name</span><span class="review-value">${collegeName}</span></div>
+        <div class="review-item"><span class="review-label">Group Size</span><span class="review-value">${teamSize} Person(s)</span></div>
+        <div class="review-item"><span class="review-label">Additional Members</span><span class="review-value">${membersDisplay}</span></div>
+        <div class="review-item"><span class="review-label">Attached Documents</span><span class="review-value">${filesHtml}</span></div>
+        <div class="review-item"><span class="review-label">Pitch Abstract</span><span class="review-value">${ideaAbstract}</span></div>
+    `;
+
+    // Display overlay
+    reviewModal.style.display = 'flex';
+});
+
+// Close Preview Window
+backEditBtn.addEventListener('click', function() {
+    reviewModal.style.display = 'none';
+});
+
+// Stage 2: Final Data Conversion and Server Upload Pipeline
+finalConfirmBtn.addEventListener('click', async function() {
+    // Dismiss overlay window immediately to prevent multi-click anomalies
+    reviewModal.style.display = 'none';
+
+    const submitButton = registrationForm.querySelector('.btn-submit');
+    const originalButtonText = submitButton.innerText;
+
+    // Freeze input interaction during submission lifecycle execution
+    submitButton.disabled = true;
+    submitButton.innerText = "Submitting...";
 
     // Pack text fields into URL encoding
     const formData = new URLSearchParams();
@@ -116,12 +182,12 @@ document.getElementById('registrationForm').addEventListener('submit', async fun
     formData.append('email', document.getElementById('email').value);
     formData.append('contactnum', document.getElementById('contactnum').value);
     formData.append('teamSize', teamSizeSelect.value);
-    formData.append('teamMembers', teamMembersString);
+    formData.append('teamMembers', optimizedTeamMembersString);
     formData.append('ideaAbstract', document.getElementById('ideaAbstract').value);
     formData.append('collegeName', document.getElementById('collegeName').value);
 
-    // Convert all collected files to Base64 strings safely
-    const filePromises = filesToUpload.map(file => {
+    // Convert collected file objects to Base64 strings safely
+    const filePromises = validatedFilesToUpload.map(file => {
         return new Promise((resolve, reject) => {
             const reader = new FileReader();
             reader.onload = () => {
@@ -147,7 +213,7 @@ document.getElementById('registrationForm').addEventListener('submit', async fun
         return;
     }
 
-    // POST request to Google Apps Script Endpoint
+    // POST request payload pipeline to Google Apps Script Endpoint URL
     fetch(webAppUrl, {
         method: 'POST',
         body: formData,
@@ -162,10 +228,10 @@ document.getElementById('registrationForm').addEventListener('submit', async fun
             toast.innerHTML = `<i class="fa-solid fa-circle-check"></i> Registered successfully! ID: <strong>#${data.uniqueId}</strong>. Check your email.`;
             toast.style.display = 'block';
             
-            this.reset();
-            dynamicContainer.innerHTML = ''; // Wipe dynamic fields
+            registrationForm.reset();
+            dynamicContainer.innerHTML = ''; // Wipe dynamic entries
 
-            // Reset file upload slots back to a single input row
+            // Reset file upload layout parameters back down to a single base element block row
             const extraInputs = fileUploadContainer.querySelectorAll('.file-input-wrapper');
             extraInputs.forEach((el, index) => {
                 if (index > 0) el.remove();

@@ -223,6 +223,29 @@
         <i class="fa-solid fa-circle-check"></i> Registration submitted successfully!
     </div>
 
+
+
+
+
+<!-- Registration Review Confirmation Modal -->
+    <div id="reviewModal" class="modal-overlay" style="display: none;">
+        <div class="modal-content animate-pop-in">
+            <h2>Review Your Registration</h2>
+            <p style="color: var(--text-muted); margin-bottom: 1.5rem;">Please check all details carefully before submitting. You cannot modify them after confirmation.</p>
+            
+            <div id="reviewSummary" class="review-grid">
+                <!-- JavaScript will inject the data summaries here dynamically -->
+            </div>
+            
+            <div class="modal-actions">
+                <button type="button" id="backEditBtn" class="btn-back">Go Back & Edit</button>
+                <button type="button" id="finalConfirmBtn" class="btn-confirm">Confirm & Submit</button>
+            </div>
+        </div>
+    </div>
+    
+
+
     <!-- External JavaScript Link -->
     <script src="script.js"></script>
 </body>

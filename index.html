@@ -87,9 +87,9 @@
                                     </span>
                                 </summary>
                                 <div class="prize-dropdown-content" style="margin-top: 0.75rem; padding-top: 0.75rem; border-top: 1px solid rgba(13, 148, 136, 0.15); line-height: 1.6;">
-                                    • <strong>1st Place:</strong> <span class="neongreen-text" style="color: #2dd4bf; font-weight: 600;">NPR 10,000 (NPR 10,000)</span> + <strong>50% Scholarship</strong> for 1st Year at NPI.<br>
-                                    • <strong>2nd Place:</strong> <span class="neongreen-text" style="color: #2dd4bf; font-weight: 600;">NPR 7,000 (NPR 7,000)</span> + <strong>30% Scholarship</strong> for 1st Year at NPI.<br>
-                                    • <strong>3rd Place:</strong> <span class="neongreen-text" style="color: #2dd4bf; font-weight: 600;">NPR 4,000 (NPR 4,000)</span> + <strong>20% Scholarship</strong> for 1st Year at NPI.
+                                    • <strong>1st Place:</strong> <span class="neongreen-text" style="color: #2dd4bf; font-weight: 600;">NPR 10,000 </span> + <strong>50% Scholarship</strong> for 1st Year at NPI.<br>
+                                    • <strong>2nd Place:</strong> <span class="neongreen-text" style="color: #2dd4bf; font-weight: 600;">NPR 7,000 </span> + <strong>30% Scholarship</strong> for 1st Year at NPI.<br>
+                                    • <strong>3rd Place:</strong> <span class="neongreen-text" style="color: #2dd4bf; font-weight: 600;">NPR 4,000 </span> + <strong>20% Scholarship</strong> for 1st Year at NPI.
                                 </div>
                             </details>
                         </span>
@@ -104,7 +104,7 @@
                     </li>
                     <li>
                         <i class="fa-solid fa-users"></i> 
-                        <span><strong>Team Size:</strong> Form a group of up to <strong>4 members</strong> (Solo entries are also welcome).</span>
+                        <span><strong>Team Size:</strong> Form a group of up to <strong>4 members</strong> (Solo entries are also welcomed/encouraged).</span>
                     </li>
                 </ul>
 
@@ -121,32 +121,40 @@
         </div>
 
         <!-- Desktop Right Column / Mobile Inline Container -->
+      <!-- Desktop Right Column / Mobile Inline Container -->
         <div class="form-card animate-pop-in" id="registrationCard">
             <h2>Secure Your Slot</h2>
             <p>Fill out the primary details to register your project idea.</p>
             
             <form id="registrationForm">
+                <!-- Project Name (Mandatory) -->
                 <div class="form-group">
-                    <label for="teamName">Project / Team Name</label>
-                    <input type="text" id="teamName" name="teamName" class="form-control" placeholder="e.g., Digital Builders" required>
+                    <label for="projectName">Project / Idea Title <span style="color: #ef4444;">*</span></label>
+                    <input type="text" id="projectName" name="projectName" class="form-control" placeholder="e.g., Smart Irrigation System" required>
+                </div>
+
+                <!-- Team Name (Optional) -->
+                <div class="form-group">
+                    <label for="teamName">Team Name <span style="color: var(--text-muted); font-weight: normal;">(Optional)</span></label>
+                    <input type="text" id="teamName" name="teamName" class="form-control" placeholder="e.g., Cyber Builders">
                 </div>
 
                 <div class="form-group">
-                    <label for="leaderName">Team Leader / Presenter</label>
+                    <label for="leaderName">Team Leader / Presenter <span style="color: #ef4444;">*</span> </label>
                     <input type="text" id="leaderName" name="leaderName" class="form-control" placeholder="Full Name" required>
                 </div>
 
                 <div class="form-group">
-                    <label for="email">Email Address</label>
+                    <label for="email">Email Address<span style="color: #ef4444;">*</span> </label>
                     <input type="email" id="email" name="email" class="form-control" placeholder="name@example.com" required>
                 </div>
 
                 <div class="form-group">
-                    <label for="collegeName">College Name</label>
+                    <label for="collegeName">College Name<span style="color: #ef4444;">*</span> </label>
                     <input type="text" id="collegeName" name="collegeName" class="form-control" placeholder="e.g., Nepal Polytechnic Institute" required>
                 </div>
 
-                <!-- NEW: Required Multiple File Upload Component with dynamic "+" integration -->
+                <!-- Required Multiple File Upload Component with dynamic "+" integration -->
                 <div class="form-group">
                     <label style="font-weight: 600; display: block; margin-bottom: 8px;">
                         College ID Card / Related Document <span style="color: #ef4444;">*</span>
@@ -176,12 +184,12 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="contactnum">Contact Number</label>
+                    <label for="contactnum">Contact Number<span style="color: #ef4444;">*</span> </label>
                     <input type="tel" id="contactnum" name="contactnum" class="form-control" placeholder="e.g., 98XXXXXXXX" pattern="[0-9]{10}" title="Please enter a valid 10-digit mobile number" required>
                 </div>
 
                 <div class="form-group">
-                    <label for="teamSize">Total Number of People in Group</label>
+                    <label for="teamSize">Total Number of People in Group<span style="color: #ef4444;">*</span> </label>
                     <select id="teamSize" name="teamSize" class="form-control" required>
                         <option value="1">1 (Solo)</option>
                         <option value="2">2 People</option>
@@ -194,12 +202,13 @@
                 <div id="dynamicMembersContainer"></div>
 
                 <div class="form-group">
-                    <label for="ideaAbstract">Brief Pitch Abstract (1-2 sentences)</label>
+                    <label for="ideaAbstract">Brief Pitch Abstract (1-2 sentences)<span class="required-dot">•</span></label>
                     <textarea id="ideaAbstract" name="ideaAbstract" class="form-control" placeholder="Describe the core problem your design or concept solves..." required></textarea>
                 </div>
 
                 <button type="submit" class="btn-submit">Submit Registration</button>
             </form>
+        </div>
 
             <!-- Symmetrical Dual-Club Social Links -->
             <div class="social-branding-footer">

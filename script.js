@@ -114,7 +114,9 @@ registrationForm.addEventListener('submit', function(e) {
     optimizedTeamMembersString = memberNamesArray.join(', ');
 
     // Read details out of form fields for presentation text variables
-    const teamName = document.getElementById('teamName').value;
+    const projectName = document.getElementById('projectName').value;
+    const teamNameValue = document.getElementById('teamName').value.trim();
+    const teamName = teamNameValue !== "" ? teamNameValue : 'N/A (Solo/No Team Name)';
     const leaderName = document.getElementById('leaderName').value;
     const email = document.getElementById('email').value;
     const contactnum = document.getElementById('contactnum').value;
@@ -143,7 +145,8 @@ registrationForm.addEventListener('submit', function(e) {
 
     // Inject current entries into structural modal preview markup
     reviewSummary.innerHTML = `
-        <div class="review-item"><span class="review-label">Project / Team Name</span><span class="review-value">${teamName}</span></div>
+        <div class="review-item"><span class="review-label">Project / Idea Title</span><span class="review-value">${projectName}</span></div>
+        <div class="review-item"><span class="review-label">Team Name</span><span class="review-value">${teamName}</span></div>
         <div class="review-item"><span class="review-label">Team Leader</span><span class="review-value">${leaderName}</span></div>
         <div class="review-item"><span class="review-label">Email Address</span><span class="review-value">${email}</span></div>
         <div class="review-item"><span class="review-label">Contact Number</span><span class="review-value">${contactnum}</span></div>
@@ -177,6 +180,7 @@ finalConfirmBtn.addEventListener('click', async function() {
 
     // Pack text fields into URL encoding
     const formData = new URLSearchParams();
+    formData.append('projectName', document.getElementById('projectName').value);
     formData.append('teamName', document.getElementById('teamName').value);
     formData.append('leaderName', document.getElementById('leaderName').value);
     formData.append('email', document.getElementById('email').value);

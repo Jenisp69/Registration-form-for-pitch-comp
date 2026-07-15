@@ -50,7 +50,7 @@
                     <i class="fa-regular fa-calendar-days"></i>
                     <div>
                         <h3>Date</h3>
-                        <p>Shrawan 3</p>
+                        <p>Shrawan 10</p>
                     </div>
                 </div>
                 <div class="meta-card">
@@ -73,22 +73,30 @@
                         <i class="fa-solid fa-graduation-cap"></i> 
                         <span><strong>Eligibility:</strong> Exclusively open to <strong>+2 students</strong> who have recently passed or are currently studying.</span>
                     </li>
-                    <li>
-                        <i class="fa-solid fa-trophy"></i> 
-                        <span class="prize-toggle-container">
-                            <details>
-                                <summary><strong>Grand Prizes</strong> <span class="toggle-hint">(Click to reveal rewards)</span></summary>
-                                <div class="prize-dropdown-content">
-                                    • <strong>1st Place:</strong> <span class="neongreen-text">NPR 10,000 (NPR 10,000)</span> + <strong>50% Scholarship</strong> for 1st Year at NPI.<br>
-                                    • <strong>2nd Place:</strong> <span class="neongreen-text">NPR 7,000 (NPR 7,000)</span> + <strong>30% Scholarship</strong> for 1st Year at NPI.<br>
-                                    • <strong>3rd Place:</strong> <span class="neongreen-text">NPR 4,000 (NPR 4,000)</span> + <strong>15% Scholarship</strong> for 1st Year at NPI.
+                    <li style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
+                        <i class="fa-solid fa-trophy" style="font-size: 1.1rem; flex-shrink: 0; margin-top: 2px;"></i> 
+                        <span class="prize-toggle-container" style="flex-grow: 1;">
+                            <details class="prize-details-wrapper" style="background: rgba(13, 148, 136, 0.05); border: 1px dashed #0d9488; border-radius: 8px; padding: 0.5rem 0.8rem;">
+                                <summary class="prize-summary-trigger" style="cursor: pointer; font-weight: 600; list-style: none; display: flex; align-items: center; justify-content: space-between; gap: 8px; outline: none; user-select: none;">
+                                    <span>
+                                        <i class="fa-solid fa-award" style="color: #0d9488; margin-right: 6px;"></i>
+                                        <strong>Grand Prizes</strong>
+                                    </span>
+                                    <span class="toggle-hint" style="font-size: 0.75rem; background: #0d9488; color: white; padding: 2px 8px; border-radius: 12px; font-weight: 400; display: inline-flex; align-items: center; gap: 4px; transition: transform 0.2s;">
+                                        Tap to Reveal <i class="fa-solid fa-chevron-down" style="font-size: 0.65rem;"></i>
+                                    </span>
+                                </summary>
+                                <div class="prize-dropdown-content" style="margin-top: 0.75rem; padding-top: 0.75rem; border-top: 1px solid rgba(13, 148, 136, 0.15); line-height: 1.6;">
+                                    • <strong>1st Place:</strong> <span class="neongreen-text" style="color: #2dd4bf; font-weight: 600;">NPR 10,000 (NPR 10,000)</span> + <strong>50% Scholarship</strong> for 1st Year at NPI.<br>
+                                    • <strong>2nd Place:</strong> <span class="neongreen-text" style="color: #2dd4bf; font-weight: 600;">NPR 7,000 (NPR 7,000)</span> + <strong>30% Scholarship</strong> for 1st Year at NPI.<br>
+                                    • <strong>3rd Place:</strong> <span class="neongreen-text" style="color: #2dd4bf; font-weight: 600;">NPR 4,000 (NPR 4,000)</span> + <strong>20% Scholarship</strong> for 1st Year at NPI.
                                 </div>
                             </details>
                         </span>
                     </li>
                     <li>
                         <i class="fa-solid fa-gift"></i> 
-                        <span><strong>Assured Perk:</strong> <strong>Every single participant</strong> receives a guaranteed <strong>7% discount</strong> if they choose to study at NPI!</span>
+                        <span><strong>Assured Perk:</strong> <strong>Every single participant</strong> receives a guaranteed <strong>10% discount</strong> if they choose to study at NPI!</span>
                     </li>
                     <li>
                         <i class="fa-solid fa-stopwatch"></i> 
@@ -223,11 +231,7 @@
         <i class="fa-solid fa-circle-check"></i> Registration submitted successfully!
     </div>
 
-
-
-
-
-<!-- Registration Review Confirmation Modal -->
+    <!-- Registration Review Confirmation Modal -->
     <div id="reviewModal" class="modal-overlay" style="display: none;">
         <div class="modal-content animate-pop-in">
             <h2>Review Your Registration</h2>
@@ -244,8 +248,6 @@
         </div>
     </div>
     
-
-
     <!-- External JavaScript Link -->
     <script src="script.js"></script>
 </body>

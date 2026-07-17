@@ -43,7 +43,7 @@
         <!-- Left Column: Branding and Overview Details -->
         <div class="hero-section">
             <h1 class="animate-slide-up" style="--delay: 1;">Innovative Idea<br>Pitch Competition</h1>
-            <p class="tagline animate-slide-up" style="--delay: 2;">Engineers solve problems. Bring your groundbreaking concepts, prototypes, or structural solutions to light this Engineers' Day. Pitch to industry veterans and win exciting rewards.</p>
+            <p class="tagline animate-slide-up" style="--delay: 2;">Engineers solve problems. Bring your groundbreaking concepts, prototypes, or structural solutions. Pitch to industry veterans and win exciting rewards.</p>
             
             <div class="event-meta animate-slide-up" style="--delay: 3;">
                 <div class="meta-card">
@@ -53,13 +53,40 @@
                         <p>Shrawan 06</p>
                     </div>
                 </div>
-                <div class="meta-card">
+
+
+
+
+
+
+
+
+
+
+<!-- Clickable Venue Card linking to your exact Google Maps location -->
+                <a href="https://maps.app.goo.gl/R268PTVvBNnVY15q8" target="_blank" rel="noopener noreferrer" class="meta-card" style="text-decoration: none; color: inherit; display: flex; align-items: center; gap: 1rem; width: 100%;">
                     <i class="fa-solid fa-map-pin"></i>
                     <div>
-                        <h3>Venue</h3>
-                        <p>NPI College</p>
+                        <h3 style="margin: 0; font-size: 1rem; font-weight: 600;">Venue</h3>
+                        <p style="margin: 4px 0 0 0; font-size: 0.9rem; color: var(--text-muted); display: flex; align-items: center; gap: 6px;">
+                            NPI College <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 0.75rem; opacity: 0.8;"></i>
+                        </p>
                     </div>
-                </div>
+                </a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             </div>
 
             <!-- Mobile-only injected container (Hidden on Desktop via CSS) -->
@@ -208,7 +235,7 @@
 
                 <button type="submit" class="btn-submit">Submit Registration</button>
             </form>
-        </div>
+        
 
             <!-- Symmetrical Dual-Club Social Links -->
             <div class="social-branding-footer">
@@ -257,6 +284,41 @@
         </div>
     </div>
     
+
+
+
+
+<!-- Completely Isolated Loading Overlay -->
+<div id="submitLoadingOverlay" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.95); z-index: 99999; justify-content: center; align-items: center; flex-direction: column; text-align: center; padding: 20px; box-sizing: border-box;">
+    <!-- Simple CSS Animated Spinner -->
+    <div class="loader-spinner" style="border: 4px solid rgba(255, 255, 255, 0.1); width: 60px; height: 60px; border-radius: 50%; border-left-color: #0d9488; animation: custom-spin 1s linear infinite; margin-bottom: 24px;"></div>
+    
+    <h3 style="margin: 0 0 12px 0; color: #f8fafc; font-size: 1.4rem; font-family: sans-serif; font-weight: 600;">Uploading Documents...</h3>
+    
+    <p style="margin: 0; color: #94a3b8; max-width: 420px; line-height: 1.6; font-size: 0.95rem; font-family: sans-serif;">
+        We are saving your registration and uploading your ID files. This process usually takes <strong>1 to 2 minutes</strong> depending on your network upload speed.
+    </p>
+    
+    <p style="margin: 16px 0 0 0; color: #f87171; font-weight: 600; font-size: 0.9rem; font-family: sans-serif;">
+        ⚠️ Please do not close, refresh, or leave this tab!
+    </p>
+</div>
+
+<!-- Simple Keyframe Animation Rule -->
+<style>
+@keyframes custom-spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+</style>
+
+
+
+
+
+
+
+
     <!-- External JavaScript Link -->
     <script src="script.js"></script>
 </body>

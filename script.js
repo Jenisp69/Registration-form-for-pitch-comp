@@ -166,17 +166,70 @@ backEditBtn.addEventListener('click', function() {
     reviewModal.style.display = 'none';
 });
 
+// Client-side helper function to compress image files
+function compressImage(file, maxWidth = 1200, maxHeight = 1200, quality = 0.7) {
+    return new Promise((resolve) => {
+        // If it's not an image (e.g. PDF), resolve immediately without modification
+        if (!file.type.startsWith('image/')) {
+            resolve(file);
+            return;
+        }
+
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = (event) => {
+            const img = new Image();
+            img.src = event.target.result;
+            img.onload = () => {
+                let width = img.width;
+                let height = img.height;
+
+                // Downscale logic preserving aspect ratio
+                if (width > height) {
+                    if (width > maxWidth) {
+                        height = Math.round((height * maxWidth) / width);
+                        width = maxWidth;
+                    }
+                } else {
+                    if (height > maxHeight) {
+                        width = Math.round((width * maxHeight) / height);
+                        height = maxHeight;
+                    }
+                }
+
+                const canvas = document.createElement('canvas');
+                canvas.width = width;
+                canvas.height = height;
+                const ctx = canvas.getContext('2d');
+                ctx.drawImage(img, 0, 0, width, height);
+
+                // Export to blob and then to a new File object
+                canvas.toBlob((blob) => {
+                    const compressedFile = new File([blob], file.name.replace(/\.[^/.]+$/, "") + ".jpg", {
+                        type: 'image/jpeg',
+                        lastModified: Date.now()
+                    });
+                    resolve(compressedFile);
+                }, 'image/jpeg', quality);
+            };
+        };
+    });
+}
+
 // Stage 2: Final Data Conversion and Server Upload Pipeline
 finalConfirmBtn.addEventListener('click', async function() {
     // Dismiss overlay window immediately to prevent multi-click anomalies
     reviewModal.style.display = 'none';
+
+    // === DISPLAY PROGRESS OVERLAY ===
+    document.getElementById('submitLoadingOverlay').style.display = 'flex';
 
     const submitButton = registrationForm.querySelector('.btn-submit');
     const originalButtonText = submitButton.innerText;
 
     // Freeze input interaction during submission lifecycle execution
     submitButton.disabled = true;
-    submitButton.innerText = "Submitting...";
+    submitButton.innerText = "Compressing & Submitting...";
 
     // Pack text fields into URL encoding
     const formData = new URLSearchParams();
@@ -190,28 +243,35 @@ finalConfirmBtn.addEventListener('click', async function() {
     formData.append('ideaAbstract', document.getElementById('ideaAbstract').value);
     formData.append('collegeName', document.getElementById('collegeName').value);
 
-    // Convert collected file objects to Base64 strings safely
-    const filePromises = validatedFilesToUpload.map(file => {
-        return new Promise((resolve, reject) => {
-            const reader = new FileReader();
-            reader.onload = () => {
-                resolve({
-                    data: reader.result.split(',')[1],
-                    name: file.name,
-                    type: file.type
-                });
-            };
-            reader.onerror = error => reject(error);
-            reader.readAsDataURL(file);
-        });
-    });
-
     try {
+        // 1. Process and compress images on the fly before Base64 conversion
+        const compressedFiles = await Promise.all(
+            validatedFilesToUpload.map(file => compressImage(file))
+        );
+
+        // 2. Convert compressed file objects to Base64 strings safely
+        const filePromises = compressedFiles.map(file => {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = () => {
+                    resolve({
+                        data: reader.result.split(',')[1],
+                        name: file.name,
+                        type: file.type
+                    });
+                };
+                reader.onerror = error => reject(error);
+                reader.readAsDataURL(file);
+            });
+        });
+
         const processedFiles = await Promise.all(filePromises);
         formData.append('filesJson', JSON.stringify(processedFiles));
     } catch (err) {
         console.error("File processing error: ", err);
         alert("Failed to process the uploaded files. Please try again.");
+        
+        document.getElementById('submitLoadingOverlay').style.display = 'none';
         submitButton.disabled = false;
         submitButton.innerText = originalButtonText;
         return;
@@ -254,6 +314,7 @@ finalConfirmBtn.addEventListener('click', async function() {
         alert('Failed to connect to registration server.');
     })
     .finally(() => {
+        document.getElementById('submitLoadingOverlay').style.display = 'none';
         submitButton.disabled = false;
         submitButton.innerText = originalButtonText;
     });

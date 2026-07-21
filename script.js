@@ -1,4 +1,4 @@
-const webAppUrl = 'https://script.google.com/macros/s/AKfycbxs1duosqmAq2ADculz1O4EbNVQgwFOa4gsPmQ4SvHI9DyyyV2ZwMNvTckNCe8zqpx2Jw/exec';
+const webAppUrl = 'https://script.google.com/macros/s/AKfycbylG66NrwyuYO3tsa4pUAQcSLmS7eAx0cER4jHTXzxut_1o6_2fpXCZxTDBLqzJNcOolA/exec';
 
 const teamSizeSelect = document.getElementById('teamSize');
 const dynamicContainer = document.getElementById('dynamicMembersContainer');
